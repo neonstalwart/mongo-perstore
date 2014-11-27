@@ -1,0 +1,32 @@
+{
+  "name": "mongo-perstore",
+  "version": "0.0.0",
+  "description": "perstore interface for mongodb using node-mongodb-native 2.x",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run jshint && intern-client config=tests/intern.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/neonstalwart/mongo-perstore.git"
+  },
+  "keywords": [
+    "persevere",
+    "perstore",
+    "mongodb"
+  ],
+  "author": "Ben Hockey",
+  "license": "BSD",
+  "bugs": {
+    "url": "https://github.com/neonstalwart/mongo-perstore/issues"
+  },
+  "homepage": "https://github.com/neonstalwart/mongo-perstore",
+  "dependencies": {
+    "mongo-rql": "0.0.1",
+    "mongodb": "^1.4.22",
+    "q": "^1.1.2"
+  },
+  "devDependencies": {
+    "rql": "^0.3.3"
+  }
+}
