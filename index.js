@@ -36,7 +36,8 @@ MongoPerstore.prototype = {
 
 			query[ idProperty ] = id;
 
-			return Q.ninvoke(collection, 'findOne', query);
+			return Q.ninvoke(collection, 'findOne', query)
+			.then(stripObjectId);
 		});
 	},
 
@@ -73,6 +74,7 @@ MongoPerstore.prototype = {
 			}
 
 			return result.then(function () {
+				delete value._id;
 				return key;
 			});
 		});
@@ -109,6 +111,7 @@ MongoPerstore.prototype = {
 					Q.ninvoke(cursor, 'toArray')
 				])
 				.spread(function (totalCount, items) {
+					items = items.map(stripObjectId);
 					items.totalCount = totalCount;
 					return items;
 				});
@@ -124,3 +127,11 @@ MongoPerstore.prototype = {
 		});
 	}
 };
+
+function stripObjectId(item) {
+	if (item) {
+		delete item._id;
+	}
+
+	return item;
+}
