@@ -121,10 +121,21 @@ MongoPerstore.prototype = {
 	},
 
 	_getCollection: function () {
-		var collection = this.collection;
+		var collection = this.collection,
+			idProperty = this.idProperty;
 
 		return Q.when(this.db).then(function (db) {
-			return db.collection(collection);
+			var index = {},
+				coll = db.collection(collection);
+
+			index[ idProperty ] = 1;
+
+			return Q.ninvoke(coll, 'ensureIndex', index, {
+				unique: true
+			})
+			.then(function () {
+				return coll;
+			});
 		});
 	}
 };
