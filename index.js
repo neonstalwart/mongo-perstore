@@ -36,8 +36,7 @@ MongoPerstore.prototype = {
 
 			query[ idProperty ] = id;
 
-			return Q.ninvoke(collection, 'findOne', query)
-			.then(stripObjectId);
+			return Q.ninvoke(collection, 'findOne', query, { fields: { _id: 0 } });
 		});
 	},
 
@@ -96,12 +95,15 @@ MongoPerstore.prototype = {
 		// convert rql query to mongodb query
 		var mongoQuery = mongoRql(query, options),
 			criteria = mongoQuery.criteria,
+			fields = mongoQuery.projection || {},
 			dbOptions = {
 				skip: mongoQuery.skip,
 				limit: mongoQuery.limit,
-				fields: mongoQuery.projection,
+				fields: fields,
 				sort: mongoQuery.sort
 			};
+
+		fields._id = 0;
 
 		return this._getCollection().then(function (collection) {
 			return Q.ninvoke(collection, 'find', criteria, dbOptions)
@@ -111,7 +113,6 @@ MongoPerstore.prototype = {
 					Q.ninvoke(cursor, 'toArray')
 				])
 				.spread(function (totalCount, items) {
-					items = items.map(stripObjectId);
 					items.totalCount = totalCount;
 					return items;
 				});
@@ -127,11 +128,3 @@ MongoPerstore.prototype = {
 		});
 	}
 };
-
-function stripObjectId(item) {
-	if (item) {
-		delete item._id;
-	}
-
-	return item;
-}
