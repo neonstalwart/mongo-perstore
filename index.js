@@ -45,7 +45,7 @@ MongoPerstore.prototype = {
 
 		var store = this,
 			idProperty = store.idProperty,
-			key = 'id' in options ?
+			key = options.id != null ?
 				value[ idProperty ] = options.id :
 				// TODO: assign an id
 				value[ idProperty ];
