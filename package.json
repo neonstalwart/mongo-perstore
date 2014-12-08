@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/neonstalwart/mongo-perstore",
   "dependencies": {
+    "bson": "^0.2.15",
     "mongo-rql": "^0.0.2",
     "mongodb": "^1.4.22",
     "q": "^1.1.2"
