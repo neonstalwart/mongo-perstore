@@ -39,7 +39,7 @@ function convertObjectToStream(object) {
 		object[ 'content-type' ] = object.type;
 
 		disposition = 'attachment';
-		if (object.filename) {
+		if (object.name) {
 			disposition += ';filename="' + object.filename + '"';
 		}
 
