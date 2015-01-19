@@ -40,7 +40,7 @@ function convertObjectToStream(object) {
 
 		disposition = 'attachment';
 		if (object.name) {
-			disposition += ';filename="' + object.filename + '"';
+			disposition += ';filename="' + object.name + '"';
 		}
 
 		metadata = {
