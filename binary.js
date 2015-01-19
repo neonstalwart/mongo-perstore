@@ -47,7 +47,7 @@ function convertObjectToStream(object) {
 			'content-type': object.type,
 			'content-length': contents.buffer.length,
 			'content-disposition': disposition,
-			filename: object.filename,
+			filename: object.name,
 			alternates: [ object ]
 		};
 
