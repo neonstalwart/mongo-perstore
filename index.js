@@ -120,6 +120,28 @@ MongoPerstore.prototype = {
 		});
 	},
 
+	explain: function (query, options) {
+		// convert rql query to mongodb query
+		var mongoQuery = mongoRql(query, options),
+			criteria = mongoQuery.criteria,
+			fields = mongoQuery.projection || {},
+			dbOptions = {
+				skip: mongoQuery.skip,
+				limit: mongoQuery.limit,
+				fields: fields,
+				sort: mongoQuery.sort
+			};
+
+		fields._id = 0;
+
+		return this._getCollection().then(function (collection) {
+			return Q.ninvoke(collection, 'find', criteria, dbOptions)
+			.then(function (cursor) {
+				return Q.ninvoke(cursor, 'explain');
+			});
+		});
+	},
+
 	_getCollection: function () {
 		var collection = this.collection,
 			idProperty = this.idProperty;
