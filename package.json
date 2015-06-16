@@ -1,6 +1,6 @@
 {
   "name": "mongo-perstore",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "perstore interface for mongodb using node-mongodb-native 2.x",
   "main": "index.js",
   "scripts": {
